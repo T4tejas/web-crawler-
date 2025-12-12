@@ -15,14 +15,28 @@ from urllib.parse import urljoin, urlparse, parse_qs
 import time, json, re, os, hashlib
 from collections import deque
 
-USER_AGENT = "SafeScanner/1.0 (+https://example.com)"
-HEADERS = {"User-Agent": USER_AGENT}
-RATE_LIMIT = 0.5  # seconds between requests
-MAX_PAGES = 500
+import random
+
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "Mozilla/5.0 (X11; Linux x86_64)",
+    "Googlebot/2.1 (+http://www.google.com/bot.html)",
+    "Bingbot/2.0 (+http://www.bing.com/bingbot.htm)",
+    "curl/8.0.1",
+    "Wget/1.21.1",
+]
 
 def fetch(url, session):
     try:
-        resp = session.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
+        resp = session.post(url, data=data, headers=get_headers(), timeout=12)
+        return resp
+    except Exception:
+        return None
+
+def fetch(url, session):
+    try:
+        resp = session.get(new, headers=get_headers(), timeout=12)
         return resp
     except Exception as e:
         return None
